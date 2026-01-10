@@ -1,0 +1,5 @@
+win+R-->cmd
+cd Desktop
+cd tournament
+.\venv\Scripts\activate
+python manage.py runserver

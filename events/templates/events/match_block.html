@@ -1,0 +1,12 @@
+<strong>第 {{ match.match_number }} 场</strong>
+<div class="row">
+    <div class="col-5 team {% if match.winner == match.team1 %}winner{% endif %}">
+        {% if match.team1 %}{{ match.team1.team_name }}<br><small>{{ match.team1.player1_name }} & {{ match.team1.player2_name }}</small>{% else %}待定{% endif %}
+    </div>
+    <div class="col-2 text-center">VS</div>
+    <div class="col-5 team {% if match.winner == match.team2 %}winner{% endif %}">
+        {% if match.team2 %}{{ match.team2.team_name }}<br><small>{{ match.team2.player1_name }} & {{ match.team2.player2_name }}</small>{% else %}待定{% endif %}
+    </div>
+</div>
+{% if match.score %}<p class="text-center mt-2 mb-0"><strong>比分：</strong>{{ match.score }}</p>{% endif %}
+{% if match.winner %}<p class="text-center text-success">胜者：{{ match.winner.team_name }}</p>{% endif %}

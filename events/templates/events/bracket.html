@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ event.name }} - 淘汰赛赛程</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .bracket { font-family: Arial, sans-serif; }
+        .round { margin: 20px 0; }
+        .match { border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 8px; background: #f9f9f9; }
+        .winner { background-color: #d4edda; font-weight: bold; }
+        .team { padding: 8px; }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <a href="{% url 'event_list' %}" class="btn btn-outline-secondary mb-4">← 返回赛事列表</a>
+        
+        <h1 class="text-center mb-5">{{ event.name }}<br></h1>
+
+        <!-- 1/4决赛 -->
+        <div class="round">
+            <h3 class="text-center text-primary">1/4 决赛</h3>
+            {% for match in quarterfinals %}
+            <div class="match shadow-sm">
+                <strong>第 {{ match.match_number }} 场</strong>
+                <div class="row">
+                    <div class="col-5 team {% if match.winner == match.team1 %}winner{% endif %}">
+                        {% if match.team1 %}
+                            {{ match.team1.team_name }}<br>
+                            <small>{{ match.team1.player1_name }} & {{ match.team1.player2_name }}</small>
+                        {% else %}待定{% endif %}
+                    </div>
+                    <div class="col-2 text-center">VS</div>
+                    <div class="col-5 team {% if match.winner == match.team2 %}winner{% endif %}">
+                        {% if match.team2 %}
+                            {{ match.team2.team_name }}<br>
+                            <small>{{ match.team2.player1_name }} & {{ match.team2.player2_name }}</small>
+                        {% else %}待定{% endif %}
+                    </div>
+                </div>
+                {% if match.score %}<p class="text-center mt-2 mb-0"><strong>比分：</strong>{{ match.score }}</p>{% endif %}
+                {% if match.winner %}<p class="text-center text-success">胜者：{{ match.winner.team_name }}</p>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 半决赛和决赛类似 -->
+        <div class="round">
+            <h3 class="text-center text-info">半决赛</h3>
+            {% for match in semifinals %}
+            <div class="match shadow-sm">{% include "events/match_block.html" with match=match %}</div>
+            {% endfor %}
+        </div>
+
+        <div class="round">
+            <h3 class="text-center text-danger">决赛</h3>
+            {% for match in finals %}
+            <div class="match shadow-sm">{% include "events/match_block.html" with match=match %}</div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="/admin/" class="btn btn-primary">前往后台管理赛程</a>
+        </div>
+    </div>
+</body>
+</html>
