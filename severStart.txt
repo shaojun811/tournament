@@ -1,5 +1,14 @@
+
+Server Start
 win+R-->cmd
 cd Desktop
 cd tournament
 .\venv\Scripts\activate
 python manage.py runserver
+
+
+
+https://github.com/
+shaojun811
+shaojun811@gmail.com
+Steven_811
